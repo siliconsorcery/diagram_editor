@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 mixin CanvasControlPolicy on BasePolicySet {
   AnimationController? _animationController;
   double _baseScale = 1.0;
-  Offset _basePosition = Offset(0, 0);
+  Offset _basePosition = const Offset(0, 0);
 
-  Offset _lastFocalPoint = Offset(0, 0);
+  Offset _lastFocalPoint = const Offset(0, 0);
 
-  Offset transformPosition = Offset(0, 0);
+  Offset transformPosition = const Offset(0, 0);
   double transformScale = 1.0;
 
   bool canUpdateCanvasModel = false;
@@ -67,24 +67,22 @@ mixin CanvasControlPolicy on BasePolicySet {
 
     _animationController?.reset();
 
-    transformPosition = Offset(0, 0);
+    transformPosition = const Offset(0, 0);
     transformScale = 1.0;
 
     canvasWriter.state.updateCanvas();
   }
 
   _updateCanvasModelWithLastValues() {
-    canvasWriter.state
-        .setPosition((_basePosition * transformScale) + transformPosition);
+    canvasWriter.state.setPosition((_basePosition * transformScale) + transformPosition);
     canvasWriter.state.setScale(transformScale * _baseScale);
     canUpdateCanvasModel = false;
   }
 
   onCanvasPointerSignal(PointerSignalEvent event) {
     if (event is PointerScrollEvent) {
-      double scaleChange = event.scrollDelta.dy < 0
-          ? (1 / canvasReader.state.mouseScaleSpeed)
-          : (canvasReader.state.mouseScaleSpeed);
+      double scaleChange =
+          event.scrollDelta.dy < 0 ? (1 / canvasReader.state.mouseScaleSpeed) : (canvasReader.state.mouseScaleSpeed);
 
       scaleChange = keepScaleInBounds(scaleChange, canvasReader.state.scale);
 
@@ -97,8 +95,7 @@ mixin CanvasControlPolicy on BasePolicySet {
       canvasWriter.state.updateScale(scaleChange);
 
       var focalPoint = (event.localPosition - canvasReader.state.position);
-      var focalPointScaled =
-          focalPoint * (canvasReader.state.scale / previousScale);
+      var focalPointScaled = focalPoint * (canvasReader.state.scale / previousScale);
 
       canvasWriter.state.updatePosition(focalPoint - focalPointScaled);
       canvasWriter.state.updateCanvas();
@@ -124,35 +121,46 @@ mixin CanvasControlPolicy on BasePolicySet {
 /// It uses [onCanvasScaleStart], [onCanvasScaleUpdate], [onCanvasScaleEnd].
 /// Feel free to override other functions from [CanvasPolicy] and add them to [PolicySet].
 mixin CanvasMovePolicy on BasePolicySet implements CanvasControlPolicy {
+  @override
   AnimationController? _animationController;
 
-  Offset _basePosition = Offset(0, 0);
+  @override
+  Offset _basePosition = const Offset(0, 0);
 
-  Offset _lastFocalPoint = Offset(0, 0);
+  @override
+  Offset _lastFocalPoint = const Offset(0, 0);
 
-  Offset transformPosition = Offset(0, 0);
+  @override
+  Offset transformPosition = const Offset(0, 0);
+  @override
   double transformScale = 1.0;
 
+  @override
   bool canUpdateCanvasModel = false;
 
+  @override
   getAnimationController() {
     return _animationController;
   }
 
+  @override
   setAnimationController(AnimationController animationController) {
     _animationController = animationController;
   }
 
+  @override
   disposeAnimationController() {
     _animationController?.dispose();
   }
 
+  @override
   onCanvasScaleStart(ScaleStartDetails details) {
     _basePosition = canvasReader.state.position;
 
     _lastFocalPoint = details.focalPoint;
   }
 
+  @override
   onCanvasScaleUpdate(ScaleUpdateDetails details) {
     if (canUpdateCanvasModel) {
       _animationController?.repeat();
@@ -166,6 +174,7 @@ mixin CanvasMovePolicy on BasePolicySet implements CanvasControlPolicy {
     }
   }
 
+  @override
   onCanvasScaleEnd(ScaleEndDetails details) {
     if (canUpdateCanvasModel) {
       _updateCanvasModelWithLastValues();
@@ -173,18 +182,21 @@ mixin CanvasMovePolicy on BasePolicySet implements CanvasControlPolicy {
 
     _animationController?.reset();
 
-    transformPosition = Offset(0, 0);
+    transformPosition = const Offset(0, 0);
 
     canvasWriter.state.updateCanvas();
   }
 
+  @override
   _updateCanvasModelWithLastValues() {
     canvasWriter.state.setPosition(_basePosition + transformPosition);
     canUpdateCanvasModel = false;
   }
 
+  @override
   onCanvasPointerSignal(PointerSignalEvent event) {}
 
+  @override
   double keepScaleInBounds(double scale, double canvasScale) {
     return 1.0;
   }
