@@ -12,15 +12,16 @@ class RectComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MyComponentData myCustomData = componentData.data;
+    final myCustomData = componentData.data;
 
     return Container(
       decoration: BoxDecoration(
         color: myCustomData.color,
         border: Border.all(
           width: 2.0,
-          color: Colors.black,
+          color: const Color.fromARGB(255, 163, 163, 163),
         ),
+        borderRadius: BorderRadius.circular(8.0),
       ),
     );
   }

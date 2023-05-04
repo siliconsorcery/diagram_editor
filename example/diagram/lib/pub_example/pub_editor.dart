@@ -28,15 +28,18 @@ class _PubDiagramEditorState extends State<PubDiagramEditor> {
                 ),
               ),
               Positioned(
-                top: 32,
+                bottom: 32,
                 left: 32,
                 child: ElevatedButton(
-                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(255, 243, 33, 33),
+                    )),
                     child: const Text('Delete All'),
                     onPressed: () => myPolicySet.deleteAllComponents()),
               ),
               Positioned(
-                bottom: 32,
+                top: 32,
                 left: 32,
                 child: ElevatedButton(
                   style: ButtonStyle(

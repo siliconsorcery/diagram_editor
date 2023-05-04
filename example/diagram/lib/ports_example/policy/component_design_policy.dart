@@ -12,7 +12,7 @@ mixin MyComponentDesignPolicy implements ComponentDesignPolicy {
       case 'port':
         return PortComponent(componentData: componentData);
       default:
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
     }
   }
 }

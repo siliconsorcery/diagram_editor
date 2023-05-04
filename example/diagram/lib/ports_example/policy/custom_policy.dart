@@ -126,7 +126,12 @@ mixin CustomPolicy implements PolicySet {
       position: position,
       type: 'component',
       data: MyComponentData(
-        color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+        color: Color.fromARGB(
+          255,
+          (math.Random().nextDouble() * 63 + 182).toInt(),
+          (math.Random().nextDouble() * 63 + 182).toInt(),
+          (math.Random().nextDouble() * 63 + 182).toInt(),
+        ),
       ),
     );
 

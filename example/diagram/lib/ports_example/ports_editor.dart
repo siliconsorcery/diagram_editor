@@ -20,32 +20,26 @@ class _PortsDiagramEditorState extends State<PortsDiagramEditor> {
         body: SafeArea(
           child: Stack(
             children: [
-              Container(color: Colors.grey),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: DiagramEditor(
-                  diagramEditorContext: DiagramEditorContext(
-                    policySet: myPolicySet,
-                  ),
+              DiagramEditor(
+                diagramEditorContext: DiagramEditorContext(
+                  policySet: myPolicySet,
                 ),
               ),
               Positioned(
-                top: 0,
-                left: 0,
-                child: GestureDetector(
-                  onTap: () => myPolicySet.deleteAllComponents(),
-                  child: Container(
-                    width: 80,
-                    height: 32,
-                    color: Colors.red,
-                    child: const Center(child: Text('delete all')),
-                  ),
-                ),
+                bottom: 32,
+                left: 32,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(255, 243, 33, 33),
+                    )),
+                    child: const Text('Delete All'),
+                    onPressed: () => myPolicySet.deleteAllComponents()),
               ),
               PortSwitch(policySet: myPolicySet),
               Positioned(
-                bottom: 8,
-                left: 8,
+                top: 32,
+                left: 32,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -54,7 +48,7 @@ class _PortsDiagramEditorState extends State<PortsDiagramEditor> {
                     children: [
                       Icon(Icons.arrow_back, size: 16),
                       SizedBox(width: 8),
-                      Text('BACK TO MENU'),
+                      Text('Back'),
                     ],
                   ),
                   onPressed: () => Navigator.pop(context),

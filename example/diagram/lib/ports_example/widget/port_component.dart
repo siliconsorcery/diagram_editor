@@ -15,21 +15,21 @@ class PortComponent extends StatelessWidget {
 
     switch (portData.portState) {
       case PortState.hidden:
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       case PortState.shown:
         return Port(
           color: portData.color,
-          borderColor: Colors.black,
+          borderColor: const Color.fromARGB(255, 203, 203, 203),
         );
       case PortState.selected:
         return Port(
           color: portData.color,
-          borderColor: Colors.cyan,
+          borderColor: const Color.fromARGB(255, 255, 255, 255),
         );
       case PortState.highlighted:
         return Port(
           color: portData.color,
-          borderColor: Colors.amber,
+          borderColor: const Color.fromARGB(255, 255, 248, 50),
         );
     }
   }

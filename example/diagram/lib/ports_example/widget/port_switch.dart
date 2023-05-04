@@ -17,19 +17,18 @@ class _PortSwitchState extends State<PortSwitch> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 0,
-      left: 100,
-      child: GestureDetector(
-        onTap: () {
+      bottom: 32,
+      left: 140,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+          Colors.blue,
+        )),
+        child: Center(child: Text(widget.policySet.arePortsVisible ? 'hide ports' : 'show ports')),
+        onPressed: () {
           widget.policySet.switchPortsVisibility();
           setState(() {});
         },
-        child: Container(
-          width: 96,
-          height: 32,
-          color: Colors.amber,
-          child: Center(child: Text(widget.policySet.arePortsVisible ? 'hide ports' : 'show ports')),
-        ),
       ),
     );
   }

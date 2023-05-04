@@ -12,7 +12,6 @@ class MyPolicySet extends PolicySet
         MyCanvasPolicy,
         MyComponentPolicy,
         CustomPolicy,
-        //
         CanvasControlPolicy,
         LinkControlPolicy,
         LinkJointControlPolicy {}

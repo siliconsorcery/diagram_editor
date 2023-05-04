@@ -8,7 +8,9 @@ mixin MyCanvasPolicy implements CanvasPolicy, CustomPolicy {
     canvasWriter.model.hideAllLinkJoints();
 
     if (selectedPortId.isEmpty) {
-      addComponentDataWithPorts(canvasReader.state.fromCanvasCoordinates(details.localPosition));
+      addComponentDataWithPorts(
+        canvasReader.state.fromCanvasCoordinates(details.localPosition),
+      );
     }
     deselectAllPorts();
   }
