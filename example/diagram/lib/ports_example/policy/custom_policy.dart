@@ -18,7 +18,6 @@ mixin CustomPolicy implements PolicySet {
   ];
 
   deleteAllComponents() {
-    // selectedComponentId = null;
     canvasWriter.model.removeAllComponents();
   }
 
@@ -123,7 +122,7 @@ mixin CustomPolicy implements PolicySet {
   ComponentData _getComponentData(String type, Offset position) {
     var portComponent = ComponentData(
       size: const Size(120, 120),
-      position: position,
+      position: position - const Offset(60, 60),
       type: 'component',
       data: MyComponentData(
         color: Color.fromARGB(

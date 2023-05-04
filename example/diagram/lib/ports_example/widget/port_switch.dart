@@ -24,7 +24,7 @@ class _PortSwitchState extends State<PortSwitch> {
             backgroundColor: MaterialStateProperty.all(
           Colors.blue,
         )),
-        child: Center(child: Text(widget.policySet.arePortsVisible ? 'hide ports' : 'show ports')),
+        child: Center(child: Text(widget.policySet.arePortsVisible ? 'Hide Ports' : 'Show Ports')),
         onPressed: () {
           widget.policySet.switchPortsVisibility();
           setState(() {});
