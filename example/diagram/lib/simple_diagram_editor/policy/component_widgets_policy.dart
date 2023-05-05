@@ -26,10 +26,11 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePol
   }
 
   Widget _tools(ComponentData componentData, context) {
+    final borderSize = componentData.data.borderWidth * canvasReader.state.scale;
     Offset componentPosition = canvasReader.state.toCanvasCoordinates(componentData.position);
     return Positioned(
-      left: componentPosition.dx - 24,
-      top: componentPosition.dy - 48,
+      left: componentPosition.dx - borderSize / 2,
+      top: componentPosition.dy - borderSize / 2 - 48,
       child: DecoratedBox(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -177,78 +178,37 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePol
     );
   }
 
-  Widget x_hilite(ComponentData componentData, Color color) {
-    return Positioned(
-      left: canvasReader.state.toCanvasCoordinates(componentData.position).dx,
-      top: canvasReader.state.toCanvasCoordinates(componentData.position).dy,
-      child: CustomPaint(
-        painter: ComponentHighlightPainter(
-          width: (componentData.size.width) * canvasReader.state.scale,
-          height: (componentData.size.height) * canvasReader.state.scale,
-          color: color,
-        ),
-      ),
-    );
-  }
-
   Widget _hilite(ComponentData componentData, Color color) {
-    Offset origin = canvasReader.state.toCanvasCoordinates(componentData.position);
+    final borderSize = componentData.data.borderWidth * canvasReader.state.scale;
+    Offset topLeft = canvasReader.state.toCanvasCoordinates(componentData.position);
+    Offset bottomRight =
+        canvasReader.state.toCanvasCoordinates(componentData.position + componentData.size.bottomRight(Offset.zero));
+    final size = Size(bottomRight.dx - topLeft.dx, bottomRight.dy - topLeft.dy);
     return Positioned(
-      top: origin.dy - 1,
-      left: origin.dx - 1,
+      top: topLeft.dy - borderSize / 2,
+      left: topLeft.dx - borderSize / 2,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: const Color.fromARGB(32, 54, 133, 244),
+          color: color.withAlpha(32),
           border: Border.fromBorderSide(BorderSide(color: color, width: 3)),
         ),
         child: SizedBox(
-          width: componentData.size.width + 2,
-          height: componentData.size.height + 2,
+          width: size.width + borderSize,
+          height: size.height + borderSize,
         ),
       ),
     );
   }
 
-  // Widget _resize(ComponentData componentData) {
-  //   Offset componentBottomRightCorner =
-  //       canvasReader.state.toCanvasCoordinates(componentData.position + componentData.size.bottomRight(Offset.zero));
-  //   return Positioned(
-  //     left: componentBottomRightCorner.dx - 12,
-  //     top: componentBottomRightCorner.dy - 12,
-  //     child: GestureDetector(
-  //       onPanUpdate: (details) {
-  //         canvasWriter.model.resizeComponent(componentData.id, details.delta / canvasReader.state.scale);
-  //         canvasWriter.model.updateComponentLinks(componentData.id);
-  //       },
-  //       child: MouseRegion(
-  //         cursor: SystemMouseCursors.resizeDownRight,
-  //         child: Container(
-  //           width: 24,
-  //           height: 24,
-  //           color: Colors.transparent,
-  //           child: Center(
-  //             child: Container(
-  //               width: 8,
-  //               height: 8,
-  //               decoration: BoxDecoration(
-  //                 color: Colors.black,
-  //                 border: Border.all(color: Colors.grey[200]!),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _resize(ComponentData componentData) {
+    final borderSize = componentData.data.borderWidth * canvasReader.state.scale;
+
     Offset componentBottomRightCorner = canvasReader.state.toCanvasCoordinates(
       componentData.position + componentData.size.bottomRight(Offset.zero),
     );
     return Positioned(
-      left: componentBottomRightCorner.dx - 16,
-      top: componentBottomRightCorner.dy - 16,
+      left: componentBottomRightCorner.dx + borderSize / 2 - 16 - 2,
+      top: componentBottomRightCorner.dy + borderSize / 2 - 16 - 2,
       child: GestureDetector(
         onPanUpdate: (details) {
           canvasWriter.model.resizeComponent(

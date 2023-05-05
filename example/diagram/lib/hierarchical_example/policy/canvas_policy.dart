@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:diagram/hierarchical_example/component_data.dart';
 import 'package:diagram/hierarchical_example/policy/custom_policy.dart';
-import 'package:diagram/simple_diagram_editor/data/custom_component_data.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
@@ -23,11 +23,13 @@ mixin MyCanvasPolicy implements CanvasPolicy, CustomPolicy {
         hideComponentHighlight(selectedComponentId);
         selectedComponentId = '';
       } else {
+        final size = sizes[math.Random().nextInt(sizes.length)];
         canvasWriter.model.addComponent(
           ComponentData(
-            size: sizes[math.Random().nextInt(sizes.length)],
+            size: size,
             minSize: const Size(72, 48),
-            position: canvasReader.state.fromCanvasCoordinates(details.localPosition),
+            position: canvasReader.state.fromCanvasCoordinates(details.localPosition) -
+                Offset(size.width / 2, size.height / 2),
             data: MyComponentData(),
           ),
         );

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class MyComponentData {
   bool isHighlightVisible;
-  Color color =
-      Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+  Color color = Color.fromARGB(
+    255,
+    (math.Random().nextDouble() * 63 + 182).toInt(),
+    (math.Random().nextDouble() * 63 + 182).toInt(),
+    (math.Random().nextDouble() * 63 + 182).toInt(),
+  );
 
   MyComponentData({this.isHighlightVisible = false});
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:diagram/hierarchical_example/policy/custom_policy.dart';
 import 'package:diagram/simple_diagram_editor/widget/option_icon.dart';
 import 'package:diagram_editor/diagram_editor.dart';
@@ -123,17 +125,21 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomPolicy {
   }
 
   Widget _hilite(ComponentData componentData) {
-    Offset origin = canvasReader.state.toCanvasCoordinates(componentData.position);
+    Offset topLeft = canvasReader.state.toCanvasCoordinates(componentData.position);
+    Offset bottomRight =
+        canvasReader.state.toCanvasCoordinates(componentData.position + componentData.size.bottomRight(Offset.zero));
+    final size = Size(bottomRight.dx - topLeft.dx, bottomRight.dy - topLeft.dy);
+    log('$size');
     return Positioned(
-      top: origin.dy,
-      left: origin.dx,
+      top: topLeft.dy,
+      left: topLeft.dx,
       child: DecoratedBox(
         decoration: const BoxDecoration(
           color: Color.fromARGB(32, 54, 133, 244),
         ),
         child: SizedBox(
-          width: componentData.size.width,
-          height: componentData.size.height,
+          width: size.width,
+          height: size.height,
         ),
       ),
     );

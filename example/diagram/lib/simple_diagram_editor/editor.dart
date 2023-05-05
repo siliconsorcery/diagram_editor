@@ -48,6 +48,7 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
               ),
 
               // q` Overlay UI
+
               // Minimap
               Positioned(
                 right: 32,
@@ -127,7 +128,6 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                               isOptionsVisible = !isOptionsVisible;
                             });
                           },
-                          // child: const Text('Go'),
                           child: IconButton(
                             tooltip: 'Toggle',
                             icon: Icon(
@@ -146,6 +146,7 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                           visible: isOptionsVisible,
                           child: Row(
                             children: [
+                              // Reset View
                               IconButton(
                                 tooltip: 'Reset View',
                                 icon: const Icon(
@@ -155,6 +156,7 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                                 ),
                                 onPressed: () => myPolicySet.resetView(),
                               ),
+                              // Grid View
                               const SizedBox(width: 4),
                               IconButton(
                                 tooltip: myPolicySet.isGridVisible ? 'Hide Grid' : 'Show Grid',
