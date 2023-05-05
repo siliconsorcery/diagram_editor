@@ -3,7 +3,7 @@ import 'package:diagram/grid_example/grid_editor.dart';
 import 'package:diagram/hierarchical_example/hierarchical_editor.dart';
 import 'package:diagram/ports_example/ports_editor.dart';
 import 'package:diagram/pub_example/pub_editor.dart';
-import 'package:diagram/simple_diagram_editor/widget/editor.dart';
+import 'package:diagram/simple_diagram_editor/editor.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
