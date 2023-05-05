@@ -32,12 +32,13 @@ class RandomComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isHilit = componentData.data.isHighlightVisible;
     return GestureDetector(
       child: CustomPaint(
         painter: RandomPainter(
           color: Colors.grey,
-          borderColor: componentData.data.isHighlightVisible ? Colors.pink : Colors.black,
-          borderWidth: 2,
+          borderColor: isHilit ? const Color.fromARGB(255, 50, 132, 233) : Colors.black,
+          borderWidth: isHilit ? 8 : 2,
           path: componentPath(),
           path2: componentPath(),
         ),
