@@ -11,9 +11,20 @@ mixin MyComponentDesignPolicy implements ComponentDesignPolicy, CustomPolicy {
     );
     return Container(
       decoration: BoxDecoration(
-        color: componentData.data.color,
-        border: Border.all(width: 2, color: componentData.data.isHighlightVisible ? Colors.pink : Colors.black),
-      ),
+          color: componentData.data.color,
+          border: Border.all(
+              width: 2,
+              color: componentData.data.isHighlightVisible
+                  ? const Color.fromARGB(255, 30, 111, 233)
+                  : const Color.fromARGB(0, 99, 99, 99)),
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(64, 0, 0, 0),
+              spreadRadius: 1,
+              blurRadius: 3,
+            ),
+          ]),
       child: Center(
         child: isReadyToAddParent
             ? const Text('tap on parent', style: TextStyle(fontSize: 10))

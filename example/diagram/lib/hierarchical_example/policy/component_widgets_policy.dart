@@ -5,118 +5,169 @@ import 'package:flutter/material.dart';
 
 mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomPolicy {
   @override
-  Widget showCustomWidgetWithComponentDataOver(BuildContext context, ComponentData componentData) {
+  Widget showCustomWidgetWithComponentDataOver(
+    BuildContext context,
+    ComponentData componentData,
+  ) {
     return Visibility(
       visible: componentData.data.isHighlightVisible,
       child: Stack(
         children: [
-          componentTopOptions(componentData, context),
-          componentBottomOptions(componentData),
-          resizeCorner(componentData),
+          _hilite(componentData),
+          _resize(componentData),
+          _tools(componentData, context),
+          _stack(componentData),
         ],
       ),
     );
   }
 
-  Widget componentTopOptions(ComponentData componentData, context) {
-    Offset componentPosition = canvasReader.state.toCanvasCoordinates(componentData.position);
+  Widget _tools(ComponentData componentData, context) {
+    Offset origin = canvasReader.state.toCanvasCoordinates(componentData.position);
     return Positioned(
-      left: componentPosition.dx - 24,
-      top: componentPosition.dy - 48,
-      child: Row(
+      top: origin.dy - 44,
+      left: origin.dx,
+      child: Stack(
         children: [
-          OptionIcon(
-            color: Colors.grey.withOpacity(0.7),
-            iconData: Icons.delete_forever,
-            tooltip: 'delete',
-            size: 40,
-            onPressed: () {
-              canvasWriter.model.removeComponent(componentData.id);
-              selectedComponentId = '';
-            },
-          ),
-          const SizedBox(width: 12),
-          OptionIcon(
-            color: Colors.grey.withOpacity(0.7),
-            iconData: Icons.person_add,
-            tooltip: 'add parent',
-            size: 40,
-            onPressed: () {
-              isReadyToAddParent = true;
-              componentData.updateComponent();
-            },
-          ),
-          const SizedBox(width: 12),
-          OptionIcon(
-            color: Colors.grey.withOpacity(0.7),
-            iconData: Icons.person_remove,
-            tooltip: 'remove parent',
-            size: 40,
-            onPressed: () {
-              canvasWriter.model.removeComponentParent(componentData.id);
-              componentData.updateComponent();
-            },
+          DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+              boxShadow: [
+                BoxShadow(color: Color.fromARGB(64, 24, 119, 229), blurRadius: 4, spreadRadius: 1),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // const Text('Hello Again!'),
+                  // const SizedBox(width: 8),
+                  IconButton(
+                    tooltip: 'Add Parent',
+                    icon: const Icon(
+                      Icons.person_add,
+                      color: Color.fromARGB(255, 43, 124, 216),
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      isReadyToAddParent = true;
+                      componentData.updateComponent();
+                    },
+                  ),
+                  const SizedBox(width: 4),
+                  IconButton(
+                    tooltip: 'Remove Parent',
+                    icon: const Icon(
+                      Icons.person_remove,
+                      color: Color.fromARGB(255, 43, 124, 216),
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      canvasWriter.model.removeComponentParent(componentData.id);
+                      componentData.updateComponent();
+                    },
+                  ),
+                  const SizedBox(width: 4),
+                  IconButton(
+                    tooltip: 'Delete',
+                    icon: const Icon(
+                      Icons.delete_forever,
+                      color: Color.fromARGB(255, 216, 43, 43),
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      canvasWriter.model.removeComponent(componentData.id);
+                      selectedComponentId = '';
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget componentBottomOptions(ComponentData componentData) {
-    Offset componentBottomLeftCorner =
-        canvasReader.state.toCanvasCoordinates(componentData.position + componentData.size.bottomLeft(Offset.zero));
+  Widget _stack(ComponentData componentData) {
+    Offset componentBottomLeftCorner = canvasReader.state.toCanvasCoordinates(
+      componentData.position + componentData.size.bottomLeft(Offset.zero),
+    );
     return Positioned(
-      left: componentBottomLeftCorner.dx - 16,
-      top: componentBottomLeftCorner.dy + 8,
+      left: componentBottomLeftCorner.dx,
+      top: componentBottomLeftCorner.dy + 4,
       child: Row(
         children: [
           OptionIcon(
-            color: Colors.grey.withOpacity(0.7),
             iconData: Icons.arrow_upward,
             tooltip: 'bring to front',
-            size: 24,
-            shape: BoxShape.rectangle,
+            iconColor: const Color.fromARGB(255, 43, 124, 216),
+            size: 28,
             onPressed: () => canvasWriter.model.moveComponentToTheFront(componentData.id),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 8),
           OptionIcon(
-            color: Colors.grey.withOpacity(0.7),
             iconData: Icons.arrow_downward,
             tooltip: 'move to back',
-            size: 24,
-            shape: BoxShape.rectangle,
+            iconColor: const Color.fromARGB(255, 43, 124, 216),
+            size: 28,
             onPressed: () => canvasWriter.model.moveComponentToTheBack(componentData.id),
           ),
-          const SizedBox(width: 40),
         ],
       ),
     );
   }
 
-  resizeCorner(ComponentData componentData) {
-    Offset componentBottomRightCorner =
-        canvasReader.state.toCanvasCoordinates(componentData.position + componentData.size.bottomRight(Offset.zero));
+  Widget _hilite(ComponentData componentData) {
+    Offset origin = canvasReader.state.toCanvasCoordinates(componentData.position);
     return Positioned(
-      left: componentBottomRightCorner.dx - 12,
-      top: componentBottomRightCorner.dy - 12,
+      top: origin.dy,
+      left: origin.dx,
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(32, 54, 133, 244),
+        ),
+        child: SizedBox(
+          width: componentData.size.width,
+          height: componentData.size.height,
+        ),
+      ),
+    );
+  }
+
+  Widget _resize(ComponentData componentData) {
+    Offset componentBottomRightCorner = canvasReader.state.toCanvasCoordinates(
+      componentData.position + componentData.size.bottomRight(Offset.zero),
+    );
+    return Positioned(
+      left: componentBottomRightCorner.dx - 16 - 2,
+      top: componentBottomRightCorner.dy - 16 - 2,
       child: GestureDetector(
         onPanUpdate: (details) {
-          canvasWriter.model.resizeComponent(componentData.id, details.delta / canvasReader.state.scale);
+          canvasWriter.model.resizeComponent(
+            componentData.id,
+            details.delta / canvasReader.state.scale,
+          );
           canvasWriter.model.updateComponentLinks(componentData.id);
         },
         child: MouseRegion(
           cursor: SystemMouseCursors.resizeDownRight,
           child: Container(
-            width: 24,
-            height: 24,
-            color: Colors.transparent,
+            width: 32,
+            height: 32,
+            color: Colors.black.withOpacity(0.0),
             child: Center(
               child: Container(
-                width: 8,
-                height: 8,
+                width: 12,
+                height: 12,
                 decoration: BoxDecoration(
-                  color: Colors.black,
-                  border: Border.all(color: Colors.grey[200]!),
+                  color: const Color.fromARGB(255, 41, 118, 219),
+                  border: Border.all(color: Colors.white, width: 2),
+                  borderRadius: BorderRadius.circular(6),
                 ),
               ),
             ),

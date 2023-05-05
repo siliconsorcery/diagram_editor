@@ -12,13 +12,13 @@ class OptionIcon extends StatelessWidget {
 
   const OptionIcon({
     Key? key,
-    this.color = Colors.grey,
-    this.size = 40,
+    this.color = Colors.white,
+    this.size = 36,
     this.shape = BoxShape.circle,
     this.tooltip,
     this.iconData,
-    this.iconColor = Colors.black,
-    this.iconSize = 20,
+    this.iconColor = const Color.fromARGB(255, 36, 36, 36),
+    this.iconSize = 24,
     this.onPressed,
   }) : super(key: key);
 
@@ -30,6 +30,12 @@ class OptionIcon extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         shape: shape,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(64),
+            blurRadius: 4,
+          ),
+        ],
       ),
       child: IconButton(
         tooltip: tooltip,
