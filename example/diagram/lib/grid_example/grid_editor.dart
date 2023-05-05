@@ -22,28 +22,26 @@ class _GridDiagramEditorState extends State<GridDiagramEditor> {
         body: SafeArea(
           child: Stack(
             children: [
-              Container(color: Colors.grey),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: DiagramEditor(
-                  diagramEditorContext: DiagramEditorContext(
-                    policySet: myPolicySet,
-                  ),
+              DiagramEditor(
+                diagramEditorContext: DiagramEditorContext(
+                  policySet: myPolicySet,
                 ),
               ),
-              GestureDetector(
-                onTap: () => myPolicySet.deleteAllComponents(),
-                child: Container(
-                  width: 80,
-                  height: 32,
-                  color: Colors.red,
-                  child: const Center(child: Text('delete all')),
+              Positioned(
+                bottom: 32,
+                left: 32,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                  ),
+                  child: const Text('Delete All'),
+                  onPressed: () => myPolicySet.deleteAllComponents(),
                 ),
               ),
               SpanSwitch(policySet: myPolicySet),
               Positioned(
-                bottom: 8,
-                left: 8,
+                top: 32,
+                left: 32,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -52,7 +50,7 @@ class _GridDiagramEditorState extends State<GridDiagramEditor> {
                     children: [
                       Icon(Icons.arrow_back, size: 16),
                       SizedBox(width: 8),
-                      Text('BACK TO MENU'),
+                      Text('Back'),
                     ],
                   ),
                   onPressed: () => Navigator.pop(context),

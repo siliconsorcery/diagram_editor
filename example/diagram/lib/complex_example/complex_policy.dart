@@ -57,8 +57,12 @@ mixin MyComponentDesignPolicy implements ComponentDesignPolicy, CustomPolicy {
         final isHilit = componentData.data.isHighlightVisible;
         return Container(
           decoration: BoxDecoration(
-            color: isHilit ? Colors.lightBlue.withAlpha(128) : Colors.limeAccent.withAlpha(128),
+            color: isHilit ? const Color.fromARGB(0, 0, 0, 0) : Colors.limeAccent.withAlpha(128),
             borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isHilit ? Colors.lightBlue : Colors.limeAccent,
+              width: 4,
+            ),
           ),
           child: isHilit ? const FlutterLogo(style: FlutterLogoStyle.horizontal) : const FlutterLogo(),
         );

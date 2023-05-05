@@ -50,8 +50,66 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Examples of usage of Flutter diagram_editor library.'),
-              const SizedBox(height: 16),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                child: const Text('Editor'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/editor');
+                },
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                child: const Text('Core'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/pub_example');
+                },
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                child: const Text('Port'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/ports');
+                },
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                child: const Text('Hierarchical'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/hierarchical');
+                },
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                child: const Text('Widget'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/complex');
+                },
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                child: const Text('Snap'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/grid');
+                },
+              ),
+              const SizedBox(height: 32),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -69,80 +127,6 @@ class HomeScreen extends StatelessWidget {
                 child: const Text('library'),
                 onPressed: () {
                   _launchURL('https://pub.dev/packages/diagram_editor');
-                },
-              ),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: const Text('Simple editor'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/editor');
-                },
-              ),
-              const SizedBox(height: 40),
-              const Text('More examples:'),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: const Text('pub.dev example'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/pub_example');
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: const Text('port example'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/ports');
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: const Text('hierarchical components example'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/hierarchical');
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: const Text('complex widget components'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/complex');
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: const Text('grid snapping example'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/grid');
-                },
-              ),
-              const SizedBox(height: 40),
-              const Text('link to ETL app:'),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
-                ),
-                child: const Text('ETL'),
-                onPressed: () {
-                  _launchURL('https://arokip.github.io/etl_diagram_editor');
                 },
               ),
             ],
@@ -197,7 +181,7 @@ class HierarchicalDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
         body: HierarchicalDiagramEditor(),
       ),

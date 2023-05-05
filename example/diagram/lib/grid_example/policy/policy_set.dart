@@ -12,5 +12,4 @@ class MyPolicySet extends PolicySet
         MyComponentPolicy,
         CustomPolicy,
         MyCanvasWidgetsPolicy,
-        //
         CanvasControlPolicy {}
