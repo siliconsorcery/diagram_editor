@@ -2,7 +2,9 @@ import 'package:diagram/simple_diagram_editor/policy/custom_policy.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
+// q` MyLinkControlPolicy
 mixin MyLinkControlPolicy implements LinkPolicy, CustomStatePolicy {
+  // q` > onLinkTapUp
   @override
   onLinkTapUp(String linkId, TapUpDetails details) {
     hideLinkOption();
@@ -14,6 +16,7 @@ mixin MyLinkControlPolicy implements LinkPolicy, CustomStatePolicy {
 
   int? segmentIndex;
 
+  // q` > onLinkScaleStart
   @override
   onLinkScaleStart(String linkId, ScaleStartDetails details) {
     hideLinkOption();
@@ -26,6 +29,7 @@ mixin MyLinkControlPolicy implements LinkPolicy, CustomStatePolicy {
     }
   }
 
+  // q` > onLinkScaleUpdate
   @override
   onLinkScaleUpdate(String linkId, ScaleUpdateDetails details) {
     if (segmentIndex != null) {
@@ -34,6 +38,7 @@ mixin MyLinkControlPolicy implements LinkPolicy, CustomStatePolicy {
     }
   }
 
+  // q` > onLinkLongPressStart
   @override
   onLinkLongPressStart(String linkId, LongPressStartDetails details) {
     hideLinkOption();
@@ -46,6 +51,7 @@ mixin MyLinkControlPolicy implements LinkPolicy, CustomStatePolicy {
     }
   }
 
+  // q` > onLinkLongPressMoveUpdate
   @override
   onLinkLongPressMoveUpdate(String linkId, LongPressMoveUpdateDetails details) {
     if (segmentIndex != null) {

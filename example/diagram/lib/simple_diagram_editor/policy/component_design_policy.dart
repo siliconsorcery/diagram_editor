@@ -15,6 +15,7 @@ import 'package:diagram/simple_diagram_editor/widget/component/round_rect_compon
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
+// q` > MyComponentDesignPolicy
 mixin MyComponentDesignPolicy implements ComponentDesignPolicy {
   @override
   Widget showComponentBody(ComponentData componentData) {

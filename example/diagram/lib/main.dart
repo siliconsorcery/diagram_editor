@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const MyApp());
 
+// q` MyApp
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// q` HomeScreen
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -137,6 +139,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// q` SimpleDemo
 class SimpleDemo extends StatelessWidget {
   const SimpleDemo({super.key});
 
@@ -176,6 +179,7 @@ class SimpleDemo extends StatelessWidget {
 //   }
 // }
 
+// q` HierarchicalDemo
 class HierarchicalDemo extends StatelessWidget {
   const HierarchicalDemo({super.key});
 

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class MiniMapPolicySet extends PolicySet with MiniMapInitPolicy, CanvasControlPolicy, MyComponentDesignPolicy {}
 
+// q` MiniMapInitPolicy
 mixin MiniMapInitPolicy implements InitPolicy {
+  // q` > initializeDiagramEditor
   @override
   initializeDiagramEditor() {
     canvasWriter.state.setMinScale(0.025);

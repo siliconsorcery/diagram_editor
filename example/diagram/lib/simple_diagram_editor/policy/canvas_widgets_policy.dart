@@ -3,6 +3,7 @@ import 'package:diagram/simple_diagram_editor/policy/custom_policy.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
+// q` > MyCanvasWidgetsPolicy
 mixin MyCanvasWidgetsPolicy implements CanvasWidgetsPolicy, CustomStatePolicy {
   @override
   List<Widget> showCustomWidgetsOnCanvasBackground(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:diagram/simple_diagram_editor/data/custom_component_data.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
+// q` CustomStatePolicy
 mixin CustomStatePolicy implements PolicySet {
   bool isGridVisible = true;
 
@@ -104,6 +105,7 @@ mixin CustomStatePolicy implements PolicySet {
   }
 }
 
+// q` CustomBehaviourPolicy
 mixin CustomBehaviourPolicy implements PolicySet, CustomStatePolicy {
   removeAll() {
     canvasWriter.model.removeAllComponents();

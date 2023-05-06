@@ -5,7 +5,9 @@ import 'package:diagram/simple_diagram_editor/policy/custom_policy.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
+// q` > MyComponentPolicy
 mixin MyComponentPolicy implements ComponentPolicy, CustomStatePolicy {
+  // q` > onComponentTap
   @override
   onComponentTap(String componentId) {
     if (isMultipleSelectionOn) {
@@ -42,6 +44,7 @@ mixin MyComponentPolicy implements ComponentPolicy, CustomStatePolicy {
 
   Offset lastFocalPoint = Offset.zero;
 
+  // q` > onComponentScaleStart
   @override
   onComponentScaleStart(componentId, details) {
     lastFocalPoint = details.localFocalPoint;
@@ -53,6 +56,7 @@ mixin MyComponentPolicy implements ComponentPolicy, CustomStatePolicy {
     }
   }
 
+  // q` > onComponentScaleUpdate
   @override
   onComponentScaleUpdate(componentId, details) {
     Offset positionDelta = details.localFocalPoint - lastFocalPoint;

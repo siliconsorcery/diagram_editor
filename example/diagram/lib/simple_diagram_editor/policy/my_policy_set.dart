@@ -11,6 +11,7 @@ import 'package:diagram/simple_diagram_editor/policy/my_link_control_policy.dart
 import 'package:diagram/simple_diagram_editor/policy/my_link_joint_control_policy.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 
+// q` MyPolicySet
 class MyPolicySet extends PolicySet
     with
         MyInitPolicy,
@@ -23,8 +24,6 @@ class MyPolicySet extends PolicySet
         MyLinkAttachmentPolicy,
         MyCanvasWidgetsPolicy,
         MyComponentWidgetsPolicy,
-        //
         CanvasControlPolicy,
-        //
         CustomStatePolicy,
         CustomBehaviourPolicy {}

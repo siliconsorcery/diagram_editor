@@ -1,10 +1,14 @@
+import 'package:diagram/design/atoms.dart' as atoms;
+import 'package:diagram/design/molecules.dart' as molecules;
 import 'package:diagram/simple_diagram_editor/dialog/edit_component_dialog.dart';
 import 'package:diagram/simple_diagram_editor/policy/custom_policy.dart';
 import 'package:diagram/simple_diagram_editor/widget/option_icon.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
+// q` MyComponentWidgetsPolicy
 mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePolicy {
+  // q` > showCustomWidgetWithComponentDataOver
   @override
   Widget showCustomWidgetWithComponentDataOver(BuildContext context, ComponentData componentData) {
     bool isJunction = componentData.type == 'junction';
@@ -25,59 +29,31 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePol
     );
   }
 
+  // q` _tools
   Widget _tools(ComponentData componentData, context) {
     final borderSize = componentData.data.borderWidth * canvasReader.state.scale;
     Offset componentPosition = canvasReader.state.toCanvasCoordinates(componentData.position);
     return Positioned(
       left: componentPosition.dx - borderSize / 2,
-      top: componentPosition.dy - borderSize / 2 - 48,
+      top: componentPosition.dy - borderSize / 2 - 48 - atoms.Sizes.md,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
-          ),
-          boxShadow: [
-            BoxShadow(color: Color.fromARGB(64, 24, 119, 229), blurRadius: 4, spreadRadius: 1),
-          ],
-        ),
+        decoration: atoms.BoxDecorations.md,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+          padding: atoms.EdgeInsets.md,
           child: Row(
             children: [
               // Edit
-              const SizedBox(width: 4),
-              IconButton(
-                tooltip: 'Edit',
-                icon: const Icon(
-                  Icons.edit,
-                  color: Color.fromARGB(255, 43, 124, 216),
-                  size: 24,
-                ),
-                onPressed: () => showEditComponentDialog(context, componentData),
+              molecules.IconTap(
+                tip: 'Edit',
+                icon: atoms.Icons.edit,
+                onTap: () => showEditComponentDialog(context, componentData),
               ),
-              // Divider
-              const SizedBox(width: 6),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 224, 224, 224),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                child: const SizedBox(
-                  width: 2,
-                  height: 24,
-                ),
-              ),
+              const molecules.Divider(),
               // Dulplcate
-              const SizedBox(width: 6),
-              IconButton(
-                tooltip: 'Duplicate',
-                icon: const Icon(
-                  Icons.copy,
-                  color: Color.fromARGB(255, 43, 124, 216),
-                  size: 24,
-                ),
-                onPressed: () {
+              molecules.IconTap(
+                tip: 'Duplicate',
+                icon: atoms.Icons.copy,
+                onTap: () {
                   String newId = duplicate(componentData);
                   canvasWriter.model.moveComponentToTheFront(newId);
                   selectedComponentId = newId;
@@ -85,88 +61,56 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePol
                   highlightComponent(newId);
                 },
               ),
-              // Top
-              const SizedBox(width: 4),
-              IconButton(
-                tooltip: 'Top',
-                icon: const Icon(
-                  Icons.arrow_upward,
-                  color: Color.fromARGB(255, 43, 124, 216),
-                  size: 24,
-                ),
-                onPressed: () => canvasWriter.model.moveComponentToTheFront(componentData.id),
+              // Bring to Front
+              const molecules.Gap(),
+              molecules.IconTap(
+                tip: 'Bring to Front',
+                icon: atoms.Icons.bringToFront,
+                onTap: () => canvasWriter.model.moveComponentToTheFront(componentData.id),
               ),
-              // Bottom
-              const SizedBox(width: 4),
-              IconButton(
-                tooltip: 'Bottom',
-                icon: const Icon(
-                  Icons.arrow_downward,
-                  color: Color.fromARGB(255, 43, 124, 216),
-                  size: 24,
-                ),
-                onPressed: () => canvasWriter.model.moveComponentToTheBack(componentData.id),
+              // Send to Back
+              const molecules.Gap(),
+              molecules.IconTap(
+                tip: 'Send to Back',
+                icon: atoms.Icons.sendToBack,
+                onTap: () => canvasWriter.model.moveComponentToTheBack(componentData.id),
               ),
-              // Divider
-              const SizedBox(width: 4),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 224, 224, 224),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                child: const SizedBox(
-                  width: 2,
-                  height: 24,
-                ),
-              ),
-              const SizedBox(width: 4),
+              const molecules.Divider(),
               // Add Link
-              const SizedBox(width: 4),
-              IconButton(
-                tooltip: 'Add Links',
-                icon: const Icon(
-                  Icons.arrow_right_alt,
-                  color: Color.fromARGB(255, 43, 124, 216),
-                  size: 24,
-                ),
-                onPressed: () {
+              molecules.IconTap(
+                tip: 'Add Connection',
+                icon: atoms.Icons.addConnection,
+                onTap: () {
                   isReadyToConnect = true;
                   componentData.updateComponent();
                 },
               ),
               // Remove Links
-              const SizedBox(width: 4),
-              IconButton(
-                tooltip: 'Remove Links',
-                icon: const Icon(
-                  Icons.link_off,
-                  color: Color.fromARGB(255, 43, 124, 216),
-                  size: 24,
-                ),
-                onPressed: () => canvasWriter.model.removeComponentConnections(componentData.id),
+              const molecules.Gap(),
+              molecules.IconTap(
+                tip: 'Remove Connection',
+                icon: atoms.Icons.removeConnection,
+                onTap: () => canvasWriter.model.removeComponentConnections(componentData.id),
               ),
               // Divider
-              const SizedBox(width: 6),
+              const molecules.Gap(),
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 224, 224, 224),
                   borderRadius: BorderRadius.circular(2),
                 ),
                 child: const SizedBox(
-                  width: 2,
+                  width: 1,
                   height: 24,
                 ),
               ),
               // Delete
-              const SizedBox(width: 6),
-              IconButton(
-                tooltip: 'Delete',
-                icon: const Icon(
-                  Icons.delete_forever,
-                  color: Color.fromARGB(255, 216, 43, 43),
-                  size: 24,
-                ),
-                onPressed: () {
+              const molecules.Gap(),
+              molecules.IconTap(
+                tip: 'Remove',
+                icon: atoms.Icons.remove,
+                color: atoms.Colors.bad,
+                onTap: () {
                   canvasWriter.model.removeComponent(componentData.id);
                   selectedComponentId = null;
                 },
@@ -178,6 +122,7 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePol
     );
   }
 
+  // q _hilite
   Widget _hilite(ComponentData componentData, Color color) {
     final borderSize = componentData.data.borderWidth * canvasReader.state.scale;
     Offset topLeft = canvasReader.state.toCanvasCoordinates(componentData.position);
@@ -187,19 +132,22 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePol
     return Positioned(
       top: topLeft.dy - borderSize / 2,
       left: topLeft.dx - borderSize / 2,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: color.withAlpha(32),
-          border: Border.fromBorderSide(BorderSide(color: color, width: 3)),
-        ),
-        child: SizedBox(
-          width: size.width + borderSize,
-          height: size.height + borderSize,
+      child: IgnorePointer(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: color.withAlpha(32),
+            border: Border.fromBorderSide(BorderSide(color: color, width: 3)),
+          ),
+          child: SizedBox(
+            width: size.width + borderSize,
+            height: size.height + borderSize,
+          ),
         ),
       ),
     );
   }
 
+  // q` _resize
   Widget _resize(ComponentData componentData) {
     final borderSize = componentData.data.borderWidth * canvasReader.state.scale;
 
@@ -240,6 +188,7 @@ mixin MyComponentWidgetsPolicy implements ComponentWidgetsPolicy, CustomStatePol
     );
   }
 
+  // q` _junction
   Widget _junction(ComponentData componentData) {
     Offset componentPosition = canvasReader.state.toCanvasCoordinates(componentData.position);
     return Positioned(

@@ -2,7 +2,10 @@ import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
 /// Attach to border, depends on shape
+
+// q` MyLinkAttachmentPolicy
 mixin MyLinkAttachmentPolicy implements LinkAttachmentPolicy {
+  // q` > getLinkEndpointAlignment
   @override
   Alignment getLinkEndpointAlignment(
     ComponentData componentData,

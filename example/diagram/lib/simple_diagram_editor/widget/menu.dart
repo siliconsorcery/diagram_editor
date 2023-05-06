@@ -1,3 +1,4 @@
+import 'package:diagram/design/atoms.dart' as atoms;
 import 'package:diagram/simple_diagram_editor/data/custom_component_data.dart';
 import 'package:diagram/simple_diagram_editor/policy/my_policy_set.dart';
 import 'package:diagram_editor/diagram_editor.dart';
@@ -19,7 +20,7 @@ class DraggableMenu extends StatelessWidget {
           (componentType) {
             var componentData = getComponentData(componentType);
             return Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              padding: atoms.EdgeInsets.lg,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return SizedBox(

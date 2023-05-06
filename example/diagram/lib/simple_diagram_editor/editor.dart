@@ -1,9 +1,12 @@
+import 'package:diagram/design/atoms.dart' as atoms;
+import 'package:diagram/design/molecules.dart' as molecules;
 import 'package:diagram/simple_diagram_editor/policy/minimap_policy.dart';
 import 'package:diagram/simple_diagram_editor/policy/my_policy_set.dart';
 import 'package:diagram/simple_diagram_editor/widget/menu.dart';
 import 'package:diagram_editor/diagram_editor.dart';
 import 'package:flutter/material.dart';
 
+// q` SimpleDemoEditor
 class SimpleDemoEditor extends StatefulWidget {
   const SimpleDemoEditor({super.key});
 
@@ -47,25 +50,49 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                 diagramEditorContext: diagramEditorContext!,
               ),
 
-              // q` Overlay UI
+              // q` ⭐️ Overlay UI
 
-              // Minimap
+              // q` Minimap
               Positioned(
-                right: 32,
-                top: 32,
+                right: atoms.Insets.xxl,
+                top: atoms.Insets.xxl,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    Container(
+                      decoration: atoms.BoxDecorations.md,
+                      child: Padding(
+                        padding: atoms.EdgeInsets.md,
+                        child: Row(
+                          children: [
+                            // Toogle Map
+                            molecules.IconTap(
+                              tip: 'View Minimap',
+                              icon: atoms.Icons.miniMap,
+                              isSelected: isMiniMapVisible,
+                              onTap: () {
+                                setState(() {
+                                  isMiniMapVisible = !isMiniMapVisible;
+                                });
+                              },
+                            ),
+                            // Reset View
+                            const molecules.Gap(),
+                            molecules.IconTap(
+                              tip: 'Reset View',
+                              icon: atoms.Icons.resetView,
+                              onTap: () => myPolicySet.resetView(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Minmap
+                    const molecules.Gap(),
                     Visibility(
                       visible: isMiniMapVisible,
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: const [
-                            BoxShadow(color: Color.fromARGB(255, 3, 112, 255), blurRadius: 4),
-                          ],
-                        ),
+                        decoration: atoms.BoxDecorations.md,
                         child: SizedBox(
                           width: 320,
                           height: 180,
@@ -75,134 +102,50 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isMiniMapVisible = !isMiniMapVisible;
-                        });
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          boxShadow: [
-                            BoxShadow(color: Color.fromARGB(255, 3, 112, 255), blurRadius: 4),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          child: Text(
-                            isMiniMapVisible ? 'Hide' : 'Show Minimap',
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 55, 136, 242),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
 
-              // Tools
+              // q` Tools
               Positioned(
-                bottom: 32,
-                left: 32,
+                bottom: atoms.Insets.xxl,
+                left: atoms.Insets.xxl,
                 child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(color: Color.fromARGB(255, 3, 112, 255), blurRadius: 4),
-                      ],
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      )),
+                  decoration: atoms.BoxDecorations.md,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                    padding: atoms.EdgeInsets.md,
                     child: Row(
                       children: [
-                        GestureDetector(
+                        // Selection Mode
+                        molecules.IconTap(
+                          tip: 'Shapes',
+                          icon: atoms.Icons.shapes,
+                          isSelected: isMenuVisible,
                           onTap: () {
-                            setState(() {
-                              isOptionsVisible = !isOptionsVisible;
-                            });
+                            setState(
+                              () {
+                                isMenuVisible = !isMenuVisible;
+                              },
+                            );
                           },
-                          child: IconButton(
-                            tooltip: 'Toggle',
-                            icon: Icon(
-                              isOptionsVisible ? Icons.menu_open : Icons.menu,
-                              color: const Color.fromARGB(255, 43, 124, 216),
-                              size: 24,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isOptionsVisible = !isOptionsVisible;
-                              });
-                            },
-                          ),
                         ),
-                        Visibility(
-                          visible: isOptionsVisible,
-                          child: Row(
-                            children: [
-                              // Reset View
-                              IconButton(
-                                tooltip: 'Reset View',
-                                icon: const Icon(
-                                  Icons.replay,
-                                  color: Color.fromARGB(255, 43, 124, 216),
-                                  size: 24,
-                                ),
-                                onPressed: () => myPolicySet.resetView(),
-                              ),
-                              // Grid View
-                              const SizedBox(width: 4),
-                              IconButton(
-                                tooltip: myPolicySet.isGridVisible ? 'Hide Grid' : 'Show Grid',
-                                icon: Icon(
-                                  myPolicySet.isGridVisible ? Icons.grid_off : Icons.grid_on,
-                                  color: const Color.fromARGB(255, 43, 124, 216),
-                                  size: 24,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    myPolicySet.isGridVisible = !myPolicySet.isGridVisible;
-                                  });
-                                },
-                              ),
-                              const SizedBox(width: 4),
-                              IconButton(
-                                tooltip: myPolicySet.isMultipleSelectionOn
-                                    ? 'Cancel Multiselection'
-                                    : 'Enable Multiselection',
-                                icon: Icon(
-                                  myPolicySet.isMultipleSelectionOn ? Icons.group_work : Icons.group_work_outlined,
-                                  color: const Color.fromARGB(255, 43, 124, 216),
-                                  size: 24,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (myPolicySet.isMultipleSelectionOn) {
-                                      myPolicySet.turnOffMultipleSelection();
-                                    } else {
-                                      myPolicySet.turnOnMultipleSelection();
-                                    }
-                                  });
-                                },
-                              ),
-                              const SizedBox(width: 4),
-                              IconButton(
-                                tooltip: 'Delete All',
-                                icon: const Icon(
-                                  Icons.delete_forever,
-                                  color: Color.fromARGB(255, 216, 43, 43),
-                                  size: 24,
-                                ),
-                                onPressed: () => myPolicySet.removeAll(),
-                              ),
-                            ],
-                          ),
+                        // Selection Mode
+                        const SizedBox(width: atoms.Insets.lg),
+                        molecules.IconTap(
+                          tip: 'Multiselection',
+                          icon: atoms.Icons.selection,
+                          isSelected: myPolicySet.isMultipleSelectionOn,
+                          onTap: () {
+                            setState(
+                              () {
+                                if (myPolicySet.isMultipleSelectionOn) {
+                                  myPolicySet.turnOffMultipleSelection();
+                                } else {
+                                  myPolicySet.turnOnMultipleSelection();
+                                }
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -210,55 +153,34 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                 ),
               ),
 
-              // Multiple Selection Tools
+              // q` Multiple Selection Tools
               Positioned(
-                bottom: 32 + 54,
-                left: 32 + 84,
+                bottom: atoms.Insets.xxl + 48 + atoms.Insets.md,
+                left: atoms.Insets.xxl,
                 child: Visibility(
                   visible: myPolicySet.isMultipleSelectionOn,
                   child: DecoratedBox(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(color: Color.fromARGB(255, 3, 112, 255), blurRadius: 4),
-                      ],
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                    ),
+                    decoration: atoms.BoxDecorations.md,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                      padding: atoms.EdgeInsets.md,
                       child: Row(
                         children: [
-                          IconButton(
-                            tooltip: 'Select All',
-                            icon: const Icon(
-                              Icons.all_inclusive,
-                              color: Color.fromARGB(255, 43, 124, 216),
-                              size: 24,
-                            ),
-                            onPressed: () => myPolicySet.selectAll(),
+                          molecules.IconTap(
+                            tip: 'Select All',
+                            icon: atoms.Icons.selectAll,
+                            onTap: () => myPolicySet.selectAll(),
                           ),
-                          const SizedBox(width: 4),
-                          IconButton(
-                            tooltip: 'Duplicate Selected',
-                            icon: const Icon(
-                              Icons.copy,
-                              color: Color.fromARGB(255, 43, 124, 216),
-                              size: 24,
-                            ),
-                            onPressed: () => myPolicySet.duplicateSelected(),
-                          ),
-                          const SizedBox(height: 4),
-                          IconButton(
-                            tooltip: 'Remove Selected',
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Color.fromARGB(255, 216, 43, 43),
-                              size: 24,
-                            ),
-                            onPressed: () => myPolicySet.removeSelected(),
-                          ),
+                          const molecules.Gap(),
+                          molecules.IconTap(
+                              tip: 'Duplicate Selected',
+                              icon: atoms.Icons.duplicateSelected,
+                              onTap: () => myPolicySet.duplicateSelected()),
+                          const molecules.Gap(),
+                          molecules.IconTap(
+                              tip: 'Remove Selected',
+                              icon: atoms.Icons.removeSelected,
+                              color: atoms.Colors.bad,
+                              onTap: () => myPolicySet.removeSelected()),
                         ],
                       ),
                     ),
@@ -266,7 +188,7 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                 ),
               ),
 
-              // Menu Parts
+              // q` Menu Parts
               Positioned(
                 top: 0,
                 left: 0,
@@ -276,34 +198,18 @@ class _SimpleDemoEditorState extends State<SimpleDemoEditor> {
                     Visibility(
                       visible: isMenuVisible,
                       child: Container(
-                        color: Colors.grey.withOpacity(0.7),
+                        decoration: atoms.BoxDecorations.md,
+                        // color: ColorAtoms.paper,
                         width: 120,
-                        height: 320,
+                        height: 420,
                         child: DraggableMenu(myPolicySet: myPolicySet),
-                      ),
-                    ),
-                    RotatedBox(
-                      quarterTurns: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isMenuVisible = !isMenuVisible;
-                          });
-                        },
-                        child: Container(
-                          color: Colors.grey[300],
-                          child: Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: Text(isMenuVisible ? 'hide menu' : 'show menu'),
-                          ),
-                        ),
                       ),
                     ),
                   ],
                 ),
               ),
 
-              // Back Button
+              // q` Back Button
               Positioned(
                 top: 32,
                 left: 32,
