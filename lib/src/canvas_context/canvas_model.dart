@@ -136,9 +136,24 @@ class CanvasModel with ChangeNotifier {
   }
 
   moveMiddleJoint(sourceComponentId, targetComponentId, linkId) {
-    print(sourceComponentId);
-    print(targetComponentId);
-    print(linkId);
+    var linkPoints = getLink(linkId).linkPoints;
+
+    var sourcePoint = linkPoints[0];
+    var targetPoint = linkPoints[3];
+
+    var xPosition = (sourcePoint.dx - targetPoint.dx).abs();
+    var yPosition = (sourcePoint.dy - targetPoint.dy).abs();
+
+    Offset midPoint1 = xPosition > yPosition
+        ? Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy)
+        : Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+
+    Offset midPoint2 = xPosition > yPosition
+        ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
+        : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+
+    linkPoints[1] = midPoint1;
+    linkPoints[2] = midPoint2;
   }
 
   /// Creates a link between components. Returns created link's id.
@@ -173,6 +188,7 @@ class CanvasModel with ChangeNotifier {
       sourceComponent.position + sourceComponent.size.center(Offset.zero),
     );
 
+// ----------------------------- 꺾인 선 생성 ---------------------------------
     var xPosition =
         (sourceComponent.position.dx - targetComponent.position.dx).abs();
 
@@ -196,6 +212,8 @@ class CanvasModel with ChangeNotifier {
             targetComponentPoint.dy)
         : Offset(targetComponentPoint.dx,
             (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+
+    // ------------------------------------------------------------------------
 
     links[linkId] = LinkData(
       id: linkId,

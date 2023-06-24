@@ -355,6 +355,7 @@ mixin LinkWriter on ModelWriter {
         'model does not contain this component id: $targetComponentId');
     assert(_canvasModel.linkExists(linkId),
         'model does not contain this link id: $linkId');
+
     _canvasModel.moveMiddleJoint(sourceComponentId, targetComponentId, linkId);
   }
 }
