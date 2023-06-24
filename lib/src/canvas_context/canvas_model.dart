@@ -135,6 +135,12 @@ class CanvasModel with ChangeNotifier {
     });
   }
 
+  moveMiddleJoint(sourceComponentId, targetComponentId, linkId) {
+    print(sourceComponentId);
+    print(targetComponentId);
+    print(linkId);
+  }
+
   /// Creates a link between components. Returns created link's id.
   String connectTwoComponents(
     String sourceComponentId,
@@ -158,7 +164,6 @@ class CanvasModel with ChangeNotifier {
         otherComponentId: sourceComponentId,
       ),
     );
-
     var sourceLinkAlignment = policySet.getLinkEndpointAlignment(
       sourceComponent,
       targetComponent.position + targetComponent.size.center(Offset.zero),
@@ -168,15 +173,39 @@ class CanvasModel with ChangeNotifier {
       sourceComponent.position + sourceComponent.size.center(Offset.zero),
     );
 
+    var xPosition =
+        (sourceComponent.position.dx - targetComponent.position.dx).abs();
+
+    var yPosition =
+        (sourceComponent.position.dy - targetComponent.position.dy).abs();
+
+    var sourceComponentPoint = sourceComponent.position +
+        sourceComponent.getPointOnComponent(sourceLinkAlignment);
+
+    var targetComponentPoint = targetComponent.position +
+        targetComponent.getPointOnComponent(targetLinkAlignment);
+
+    Offset midPoint1 = xPosition > yPosition
+        ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
+            sourceComponentPoint.dy)
+        : Offset(sourceComponentPoint.dx,
+            (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+
+    Offset midPoint2 = xPosition > yPosition
+        ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
+            targetComponentPoint.dy)
+        : Offset(targetComponentPoint.dx,
+            (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+
     links[linkId] = LinkData(
       id: linkId,
       sourceComponentId: sourceComponentId,
       targetComponentId: targetComponentId,
       linkPoints: [
-        sourceComponent.position +
-            sourceComponent.getPointOnComponent(sourceLinkAlignment),
-        targetComponent.position +
-            targetComponent.getPointOnComponent(targetLinkAlignment),
+        sourceComponentPoint,
+        midPoint1,
+        midPoint2,
+        targetComponentPoint,
       ],
       linkStyle: linkStyle == null ? LinkStyle() : linkStyle,
       data: data,
