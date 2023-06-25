@@ -180,7 +180,7 @@ class LinkStyle {
   Path getSolidLinePath(Offset point1, Offset point2) {
     Path path = new Path();
     path.moveTo(point1.dx, point1.dy);
-    path.arcToPoint(Offset(point2.dx, point2.dy), radius: Radius.circular(10));
+    path.lineTo(point2.dx, point2.dy);
     return path;
   }
 
