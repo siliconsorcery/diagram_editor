@@ -23,7 +23,7 @@ class LinkPainter extends CustomPainter {
     for (int i = 0; i < linkPoints.length - 1; i++) {
       if (linkPoints.length == 2) {
         // 처음, 끝점만 존재하는 직선
-        print('linkPoints.length == 2');
+
         canvas.drawPath(
           linkStyle.getLinePath(
             VectorUtils.getShorterLineStart(
@@ -42,7 +42,7 @@ class LinkPainter extends CustomPainter {
         );
       } else if (i == 0) {
         // 시작점
-        print('i == 0');
+
         canvas.drawPath(
           linkStyle.getLinePath(
             VectorUtils.getShorterLineStart(
@@ -57,7 +57,7 @@ class LinkPainter extends CustomPainter {
         );
       } else if (i == linkPoints.length - 2) {
         // 끝점
-        print("i == linkPoints.length - 2");
+
         canvas.drawPath(
           linkStyle.getLinePath(
             linkPoints[i],
@@ -72,7 +72,7 @@ class LinkPainter extends CustomPainter {
         );
       } else {
         // 중간 연결점들
-        print('else');
+
         canvas.drawPath(
             linkStyle.getLinePath(linkPoints[i], linkPoints[i + 1], scale),
             paint);
