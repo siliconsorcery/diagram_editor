@@ -22,6 +22,7 @@ class LinkPainter extends CustomPainter {
 
     for (int i = 0; i < linkPoints.length - 1; i++) {
       if (linkPoints.length == 2) {
+        print('linkPoints.length == 2');
         canvas.drawPath(
           linkStyle.getLinePath(
             VectorUtils.getShorterLineStart(
@@ -39,6 +40,7 @@ class LinkPainter extends CustomPainter {
           paint,
         );
       } else if (i == 0) {
+        print('i == 0');
         canvas.drawPath(
           linkStyle.getLinePath(
             VectorUtils.getShorterLineStart(
@@ -52,6 +54,7 @@ class LinkPainter extends CustomPainter {
           paint,
         );
       } else if (i == linkPoints.length - 2) {
+        print("i == linkPoints.length - 2");
         canvas.drawPath(
           linkStyle.getLinePath(
             linkPoints[i],
@@ -65,6 +68,7 @@ class LinkPainter extends CustomPainter {
           paint,
         );
       } else {
+        print('else');
         canvas.drawPath(
             linkStyle.getLinePath(linkPoints[i], linkPoints[i + 1], scale),
             paint);
