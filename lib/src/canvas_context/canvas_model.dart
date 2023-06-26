@@ -135,15 +135,20 @@ class CanvasModel with ChangeNotifier {
     });
   }
 
+// ------------ component를 움직일 때 새로운 midPoint 값 적용
   moveMiddleJoint(sourceComponentId, targetComponentId, linkId) {
+    // 연결된 링크의 연결점들 좌표 담겨있는 list
     var linkPoints = getLink(linkId).linkPoints;
 
+// 링크의 시작점과 끝 점
     var sourcePoint = linkPoints[0];
     var targetPoint = linkPoints[3];
 
+// 시작점과 끝 점 x, y좌표의 떨어진 거리
     var xPosition = (sourcePoint.dx - targetPoint.dx).abs();
     var yPosition = (sourcePoint.dy - targetPoint.dy).abs();
 
+// 연결된 task의 위, 아래 배치가 바뀌는 순간에만 x/2 적용 ( 안 그러면 오류 발생 )
     Offset midPoint1 = (75 < yPosition && yPosition < 85)
         ? Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy)
         : Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
@@ -152,14 +157,13 @@ class CanvasModel with ChangeNotifier {
         ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
         : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
-    print(yPosition);
-
     // Offset midPoint1 =
     //     Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
     // Offset midPoint2 =
     //     Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
+// 새롭게 구한 midPoint값 적용
     linkPoints[1] = midPoint1;
     linkPoints[2] = midPoint2;
   }
@@ -196,32 +200,16 @@ class CanvasModel with ChangeNotifier {
       sourceComponent.position + sourceComponent.size.center(Offset.zero),
     );
 
-// ----------------------------- 꺾인 선 생성 ---------------------------------
-    // var xPosition =
-    //     (sourceComponent.position.dx - targetComponent.position.dx).abs();
+// ----------------------------- 꺾인 선 구역 ---------------------------------
 
-    // var yPosition =
-    //     (sourceComponent.position.dy - targetComponent.position.dy).abs();
-
+// 연결되는 두 컴포넌트의 각 연결점
     var sourceComponentPoint = sourceComponent.position +
         sourceComponent.getPointOnComponent(sourceLinkAlignment);
 
     var targetComponentPoint = targetComponent.position +
         targetComponent.getPointOnComponent(targetLinkAlignment);
 
-    // Offset midPoint1 = xPosition > yPosition
-    //     ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
-    //         sourceComponentPoint.dy)
-    //     : Offset(sourceComponentPoint.dx,
-    //         (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
-
-    // Offset midPoint2 = xPosition > yPosition
-    //     ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
-    //         targetComponentPoint.dy)
-    //     : Offset(targetComponentPoint.dx,
-    //         (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
-
-// 세로 정렬인 경우 두 컴포넌트 y/2
+// task들 수직 정렬이면 보기 좋게 y / 2, 수평 정렬이면 x / 2 -> 후에 구현 예정. 현재는 y/2 고정
     Offset midPoint1 = Offset(sourceComponentPoint.dx,
         (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
 
@@ -234,6 +222,7 @@ class CanvasModel with ChangeNotifier {
       id: linkId,
       sourceComponentId: sourceComponentId,
       targetComponentId: targetComponentId,
+      // 기존에는 source, target만 있었지만 중간 연결점 2개 추가해서 꺾인 선 만듦
       linkPoints: [
         sourceComponentPoint,
         midPoint1,
