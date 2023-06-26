@@ -195,11 +195,11 @@ class CanvasModel with ChangeNotifier {
     );
 
 // ----------------------------- 꺾인 선 생성 ---------------------------------
-    var xPosition =
-        (sourceComponent.position.dx - targetComponent.position.dx).abs();
+    // var xPosition =
+    //     (sourceComponent.position.dx - targetComponent.position.dx).abs();
 
-    var yPosition =
-        (sourceComponent.position.dy - targetComponent.position.dy).abs();
+    // var yPosition =
+    //     (sourceComponent.position.dy - targetComponent.position.dy).abs();
 
     var sourceComponentPoint = sourceComponent.position +
         sourceComponent.getPointOnComponent(sourceLinkAlignment);
@@ -207,23 +207,24 @@ class CanvasModel with ChangeNotifier {
     var targetComponentPoint = targetComponent.position +
         targetComponent.getPointOnComponent(targetLinkAlignment);
 
-    Offset midPoint1 = xPosition > yPosition
-        ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
-            sourceComponentPoint.dy)
-        : Offset(sourceComponentPoint.dx,
-            (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+    // Offset midPoint1 = xPosition > yPosition
+    //     ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
+    //         sourceComponentPoint.dy)
+    //     : Offset(sourceComponentPoint.dx,
+    //         (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
 
-    Offset midPoint2 = xPosition > yPosition
-        ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
-            targetComponentPoint.dy)
-        : Offset(targetComponentPoint.dx,
-            (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+    // Offset midPoint2 = xPosition > yPosition
+    //     ? Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
+    //         targetComponentPoint.dy)
+    //     : Offset(targetComponentPoint.dx,
+    //         (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
 
-    // Offset midPoint1 = Offset(sourceComponentPoint.dx,
-    //     (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+// 세로 정렬인 경우 두 컴포넌트 y/2
+    Offset midPoint1 = Offset(sourceComponentPoint.dx,
+        (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
 
-    // Offset midPoint2 = Offset(targetComponentPoint.dx,
-    //     (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+    Offset midPoint2 = Offset(targetComponentPoint.dx,
+        (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
 
     // ------------------------------------------------------------------------
 
