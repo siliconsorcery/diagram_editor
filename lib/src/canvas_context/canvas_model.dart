@@ -144,11 +144,11 @@ class CanvasModel with ChangeNotifier {
     var xPosition = (sourcePoint.dx - targetPoint.dx).abs();
     var yPosition = (sourcePoint.dy - targetPoint.dy).abs();
 
-    Offset midPoint1 = (xPosition * 0.6) > yPosition
+    Offset midPoint1 = (xPosition - 100) > yPosition
         ? Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy)
         : Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
-    Offset midPoint2 = (xPosition * 0.6) > yPosition
+    Offset midPoint2 = (xPosition - 100) > yPosition
         ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
         : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
