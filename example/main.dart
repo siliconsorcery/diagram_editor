@@ -1,9 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:diagram_editor/diagram_editor.dart';
-import 'package:diagram_editor/src/getX/link_align_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 void main() => runApp(const DiagramApp());
 
@@ -255,21 +253,5 @@ mixin CustomPolicy implements PolicySet {
       decodeCustomComponentData: (json) => MyComponentData.fromJson(json),
       decodeCustomLinkData: null,
     );
-  }
-
-  changeIsAlignHorizontallyState(bool state) {
-    Get.find<LinkAlignController>().changeIsAlignHorizontally(state);
-  }
-
-  changeIsStraightLineState() {
-    Get.find<LinkAlignController>().changeIsStraightLine();
-  }
-
-  getIsAlignVertically() {
-    return Get.find<LinkAlignController>().isAlignVertically;
-  }
-
-  getIsStraightLine() {
-    return Get.find<LinkAlignController>().isStraightLine;
   }
 }
