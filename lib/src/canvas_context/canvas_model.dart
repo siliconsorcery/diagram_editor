@@ -141,22 +141,22 @@ class CanvasModel with ChangeNotifier {
     var sourcePoint = linkPoints[0];
     var targetPoint = linkPoints[3];
 
-    var xPosition = (sourcePoint.dx - targetPoint.dx).abs();
-    var yPosition = (sourcePoint.dy - targetPoint.dy).abs();
+    // var xPosition = (sourcePoint.dx - targetPoint.dx).abs();
+    // var yPosition = (sourcePoint.dy - targetPoint.dy).abs();
 
-    Offset midPoint1 = xPosition > yPosition
-        ? Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy)
-        : Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    // Offset midPoint1 = xPosition > yPosition
+    //     ? Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy)
+    //     : Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
-    Offset midPoint2 = xPosition > yPosition
-        ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
-        : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    // Offset midPoint2 = xPosition > yPosition
+    //     ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
+    //     : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
-    // Offset midPoint1 =
-    //     Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    Offset midPoint1 =
+        Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
-    // Offset midPoint2 =
-    //     Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    Offset midPoint2 =
+        Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
     linkPoints[1] = midPoint1;
     linkPoints[2] = midPoint2;
