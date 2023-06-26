@@ -152,6 +152,8 @@ class CanvasModel with ChangeNotifier {
         ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
         : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
+    print(yPosition);
+
     // Offset midPoint1 =
     //     Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
