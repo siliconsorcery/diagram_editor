@@ -236,8 +236,9 @@ class CanvasModel with ChangeNotifier {
       // 기존에는 source, target만 있었지만 중간 연결점 2개 추가해서 꺾인 선 만듦
       linkPoints: [
         sourceComponentPoint,
-        midPoint1,
-        midPoint2,
+        // 꺾인선
+        // midPoint1,
+        // midPoint2,
         targetComponentPoint,
       ],
       linkStyle: linkStyle == null ? LinkStyle() : linkStyle,
