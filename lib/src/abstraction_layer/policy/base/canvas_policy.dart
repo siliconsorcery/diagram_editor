@@ -32,6 +32,10 @@ mixin CanvasPolicy on BasePolicySet {
 
   onCanvasPointerSignal(PointerSignalEvent event) {}
 
+  getPutLinkAlignController() {
+    Get.put(LinkAlignController());
+  }
+
   changeIsAlignHorizontallyState(bool state) {
     Get.find<LinkAlignController>().changeIsAlignHorizontally(state);
   }
