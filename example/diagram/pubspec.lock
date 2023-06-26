@@ -60,10 +60,9 @@ packages:
   diagram_editor:
     dependency: "direct main"
     description:
-      name: diagram_editor
-      sha256: "750aa0c76a4d934422fc1f976e3db9bcb01373f50cc49cb432ee0b987336252e"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../.."
+      relative: true
+    source: path
     version: "0.1.6"
   fake_async:
     dependency: transitive
