@@ -18,12 +18,12 @@ mixin LinkAttachmentRectPolicy implements LinkAttachmentPolicy {
 
     Offset pointAlignment;
     if (pointPosition.dx.abs() >= pointPosition.dy.abs()) {
-      pointAlignment = Offset(0.0, pointPosition.dy / pointPosition.dx.abs());
+      pointAlignment = Offset(pointPosition.dx / pointPosition.dx.abs(),
+          pointPosition.dy / pointPosition.dx.abs());
     } else {
-      pointAlignment = Offset(0.0, pointPosition.dy / pointPosition.dy.abs());
+      pointAlignment = Offset(pointPosition.dx / pointPosition.dy.abs(),
+          pointPosition.dy / pointPosition.dy.abs());
     }
-    return (pointAlignment.dy == 0.0 || pointAlignment.dy == -0.0)
-        ? const Alignment(0.0, -1.0)
-        : Alignment(pointAlignment.dx, pointAlignment.dy.roundToDouble());
+    return Alignment(pointAlignment.dx, pointAlignment.dy);
   }
 }

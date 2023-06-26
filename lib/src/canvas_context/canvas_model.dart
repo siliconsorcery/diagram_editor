@@ -5,8 +5,10 @@ import 'package:diagram_editor/src/canvas_context/model/component_data.dart';
 import 'package:diagram_editor/src/canvas_context/model/connection.dart';
 import 'package:diagram_editor/src/canvas_context/model/diagram_data.dart';
 import 'package:diagram_editor/src/canvas_context/model/link_data.dart';
+import 'package:diagram_editor/src/getX/link_align_controller.dart';
 import 'package:diagram_editor/src/utils/link_style.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 class CanvasModel with ChangeNotifier {
@@ -145,23 +147,25 @@ class CanvasModel with ChangeNotifier {
     var targetPoint = linkPoints[3];
 
 // 시작점과 끝 점 x, y좌표의 떨어진 거리
-    var xPosition = (sourcePoint.dx - targetPoint.dx).abs();
-    var yPosition = (sourcePoint.dy - targetPoint.dy).abs();
+    // var xPosition = (sourcePoint.dx - targetPoint.dx).abs();
+    // var yPosition = (sourcePoint.dy - targetPoint.dy).abs();
 
 // 연결된 task의 위, 아래 배치가 바뀌는 순간에만 x/2 적용 ( 안 그러면 오류 발생 )
-    Offset midPoint1 = (75 < yPosition && yPosition < 85)
-        ? Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy)
-        : Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    // Offset midPoint1 = (75 < yPosition && yPosition < 85)
+    //     ? Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy)
+    //     : Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
-    Offset midPoint2 = (75 < yPosition && yPosition < 85)
-        ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
-        : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    // Offset midPoint2 = (75 < yPosition && yPosition < 85)
+    //     ? Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy)
+    //     : Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
 
-    // Offset midPoint1 =
-    //     Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    Offset midPoint1 = Get.find<LinkAlignController>().isAlignVertically
+        ? Offset(sourcePoint.dx, (sourcePoint.dy + targetPoint.dy) / 2)
+        : Offset((sourcePoint.dx + targetPoint.dx) / 2, sourcePoint.dy);
 
-    // Offset midPoint2 =
-    //     Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2);
+    Offset midPoint2 = Get.find<LinkAlignController>().isAlignVertically
+        ? Offset(targetPoint.dx, (sourcePoint.dy + targetPoint.dy) / 2)
+        : Offset((sourcePoint.dx + targetPoint.dx) / 2, targetPoint.dy);
 
 // 새롭게 구한 midPoint값 적용
     linkPoints[1] = midPoint1;
@@ -209,12 +213,19 @@ class CanvasModel with ChangeNotifier {
     var targetComponentPoint = targetComponent.position +
         targetComponent.getPointOnComponent(targetLinkAlignment);
 
-// task들 수직 정렬이면 보기 좋게 y / 2, 수평 정렬이면 x / 2 -> 후에 구현 예정. 현재는 y/2 고정
-    Offset midPoint1 = Offset(sourceComponentPoint.dx,
-        (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+// task들 수직 정렬이면 y / 2, 수평 정렬이면 x / 2
 
-    Offset midPoint2 = Offset(targetComponentPoint.dx,
-        (sourceComponentPoint.dy + targetComponentPoint.dy) / 2);
+    Offset midPoint1 = Get.find<LinkAlignController>().isAlignVertically
+        ? Offset(sourceComponentPoint.dx,
+            (sourceComponentPoint.dy + targetComponentPoint.dy) / 2)
+        : Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
+            sourceComponentPoint.dy);
+
+    Offset midPoint2 = Get.find<LinkAlignController>().isAlignVertically
+        ? Offset(targetComponentPoint.dx,
+            (sourceComponentPoint.dy + targetComponentPoint.dy) / 2)
+        : Offset((sourceComponentPoint.dx + targetComponentPoint.dx) / 2,
+            targetComponentPoint.dy);
 
     // ------------------------------------------------------------------------
 
