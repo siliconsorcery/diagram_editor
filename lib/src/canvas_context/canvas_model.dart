@@ -138,7 +138,7 @@ class CanvasModel with ChangeNotifier {
   }
 
 // ------------ component를 움직일 때 새로운 midPoint 값 적용
-  moveMiddleJoint(sourceComponentId, targetComponentId, linkId) {
+  moveMiddleJoint(linkId) {
     // 연결된 링크의 연결점들 좌표 담겨있는 list
     var linkPoints = getLink(linkId).linkPoints;
 
