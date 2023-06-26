@@ -348,11 +348,7 @@ mixin LinkWriter on ModelWriter {
   }
 
   // component 이동 시 component와 연결된 링크들의 조인트 다시 계산
-  moveComponentWithMiddleJoint(sourceComponentId, targetComponentId, linkId) {
-    assert(_canvasModel.componentExists(sourceComponentId),
-        'model does not contain this component id: $sourceComponentId');
-    assert(_canvasModel.componentExists(targetComponentId),
-        'model does not contain this component id: $targetComponentId');
+  moveComponentWithMiddleJoint(linkId) {
     assert(_canvasModel.linkExists(linkId),
         'model does not contain this link id: $linkId');
 
