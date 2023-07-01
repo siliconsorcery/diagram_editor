@@ -14,9 +14,16 @@ class ModelWriter {
   ModelWriter(this._canvasModel, this._canvasState);
 }
 
-class CanvasModelWriter extends ModelWriter with ComponentWriter, LinkWriter, ConnectionWriter {
+class CanvasModelWriter extends ModelWriter
+    with //
+        ComponentWriter,
+        LinkWriter,
+        ConnectionWriter {
   /// Allows you to change the model.
-  CanvasModelWriter(CanvasModel canvasModel, CanvasState canvasState) : super(canvasModel, canvasState);
+  CanvasModelWriter(
+    CanvasModel canvasModel,
+    CanvasState canvasState,
+  ) : super(canvasModel, canvasState);
 
   /// Adds [componentData] to the canvas model.
   ///

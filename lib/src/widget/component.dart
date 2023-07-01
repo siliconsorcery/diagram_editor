@@ -20,10 +20,8 @@ class Component extends StatelessWidget {
     final canvasState = Provider.of<CanvasState>(context);
 
     return Positioned(
-      left: canvasState.scale * componentData.position.dx +
-          canvasState.position.dx,
-      top: canvasState.scale * componentData.position.dy +
-          canvasState.position.dy,
+      left: canvasState.scale * componentData.position.dx + canvasState.position.dx,
+      top: canvasState.scale * componentData.position.dy + canvasState.position.dy,
       width: canvasState.scale * componentData.size.width,
       height: canvasState.scale * componentData.size.height,
       child: Listener(
@@ -41,7 +39,13 @@ class Component extends StatelessWidget {
                 width: componentData.size.width,
                 height: componentData.size.height,
                 child: Container(
-                  transform: Matrix4.identity()..scale(canvasState.scale),
+                  transform: Matrix4.identity()
+                    // Rotate about the center of the component.
+                    ..translate(componentData.size.width / 2, componentData.size.height / 2)
+                    ..rotateZ(componentData.rotation)
+                    ..translate(-componentData.size.width / 2, -componentData.size.height / 2)
+                    // Scale from the center of the component.
+                    ..scale(canvasState.scale),
                   child: policy.showComponentBody(componentData),
                 ),
               ),
@@ -49,24 +53,18 @@ class Component extends StatelessWidget {
             ],
           ),
           onTap: () => policy.onComponentTap(componentData.id),
-          onTapDown: (TapDownDetails details) =>
-              policy.onComponentTapDown(componentData.id, details),
-          onTapUp: (TapUpDetails details) =>
-              policy.onComponentTapUp(componentData.id, details),
+          onTapDown: (TapDownDetails details) => policy.onComponentTapDown(componentData.id, details),
+          onTapUp: (TapUpDetails details) => policy.onComponentTapUp(componentData.id, details),
           onTapCancel: () => policy.onComponentTapCancel(componentData.id),
-          onScaleStart: (ScaleStartDetails details) =>
-              policy.onComponentScaleStart(componentData.id, details),
-          onScaleUpdate: (ScaleUpdateDetails details) =>
-              policy.onComponentScaleUpdate(componentData.id, details),
-          onScaleEnd: (ScaleEndDetails details) =>
-              policy.onComponentScaleEnd(componentData.id, details),
+          onScaleStart: (ScaleStartDetails details) => policy.onComponentScaleStart(componentData.id, details),
+          onScaleUpdate: (ScaleUpdateDetails details) => policy.onComponentScaleUpdate(componentData.id, details),
+          onScaleEnd: (ScaleEndDetails details) => policy.onComponentScaleEnd(componentData.id, details),
           onLongPress: () => policy.onComponentLongPress(componentData.id),
           onLongPressStart: (LongPressStartDetails details) =>
               policy.onComponentLongPressStart(componentData.id, details),
           onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) =>
               policy.onComponentLongPressMoveUpdate(componentData.id, details),
-          onLongPressEnd: (LongPressEndDetails details) =>
-              policy.onComponentLongPressEnd(componentData.id, details),
+          onLongPressEnd: (LongPressEndDetails details) => policy.onComponentLongPressEnd(componentData.id, details),
           onLongPressUp: () => policy.onComponentLongPressUp(componentData.id),
         ),
       ),

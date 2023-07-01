@@ -20,7 +20,7 @@ class DiagramEditorCanvas extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DiagramEditorCanvasState createState() => _DiagramEditorCanvasState();
+  State<DiagramEditorCanvas> createState() => _DiagramEditorCanvasState();
 }
 
 class _DiagramEditorCanvasState extends State<DiagramEditorCanvas> with TickerProviderStateMixin {

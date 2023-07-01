@@ -24,7 +24,7 @@ class DiagramEditor extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DiagramEditorState createState() => _DiagramEditorState();
+  State<StatefulWidget> createState() => _DiagramEditorState();
 }
 
 class _DiagramEditorState extends State<DiagramEditor> {

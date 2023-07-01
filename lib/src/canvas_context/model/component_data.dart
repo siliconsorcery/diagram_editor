@@ -22,6 +22,9 @@ class ComponentData with ChangeNotifier {
   /// You can use it for example to distinguish what [data] type this component has.
   final String? type;
 
+  /// Rotation of the component.
+  double rotation;
+
   /// This value determines if this component will be above or under other components.
   /// Higher value means on the top.
   int zOrder = 0;
@@ -53,6 +56,7 @@ class ComponentData with ChangeNotifier {
     this.position = Offset.zero,
     this.size = const Size(80, 80),
     this.minSize = const Size(4, 4),
+    this.rotation = 0,
     this.type,
     this.data,
   })  : assert(minSize <= size),
@@ -77,6 +81,18 @@ class ComponentData with ChangeNotifier {
   /// Sets the position of the component to [position] value.
   setPosition(Offset position) {
     this.position = position;
+    notifyListeners();
+  }
+
+  /// Rotate the component by [deltaRotation] value.
+  rotate(double deltaRotation) {
+    rotation += deltaRotation;
+    notifyListeners();
+  }
+
+  /// Sets the rotation of the component to [rotation] value.
+  setRotation(double rotation) {
+    this.rotation = rotation;
     notifyListeners();
   }
 
@@ -173,6 +189,7 @@ class ComponentData with ChangeNotifier {
         position = Offset(json['position'][0], json['position'][1]),
         size = Size(json['size'][0], json['size'][1]),
         minSize = Size(json['min_size'][0], json['min_size'][1]),
+        rotation = json['rotation'],
         type = json['type'],
         zOrder = json['z_order'],
         parentId = json['parent_id'],
@@ -186,6 +203,7 @@ class ComponentData with ChangeNotifier {
         'position': [position.dx, position.dy],
         'size': [size.width, size.height],
         'min_size': [minSize.width, minSize.height],
+        'rotation': rotation,
         'type': type,
         'z_order': zOrder,
         'parent_id': parentId,
